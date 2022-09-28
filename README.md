@@ -18,6 +18,9 @@ bin path to your `$PATH` variable in `~/.profile`, `~/.bashrc` or `~/.zshrc`:
 
     export PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
+Second, install Drupal coder:
+[Drupal coder](https://github.com/drupalprojects/coder#installation)
+
 Last, download the DrupalSecurity folder to your local
 
 ## Usage
