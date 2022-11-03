@@ -1,4 +1,4 @@
-example.test:
+example.test1:
   path: '/example'
   defaults:
     _form: '\Drupal\user\Form\UserPasswordForm'
@@ -14,8 +14,7 @@ example.test2:
     _form: '\Drupal\user\Form\UserPasswordForm'
     _title: 'Reset your password'
   requirements:
-    # Here is a comment why this open access callback is OK.
-    _access: 'TRUE'
+    _role: 'anonymous'
   options:
     _maintenance_access: TRUE
 
@@ -25,9 +24,19 @@ example.test3:
     _form: '\Drupal\user\Form\UserPasswordForm'
     _title: 'Reset your password'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'access conten'
   options:
     _maintenance_access: TRUE
+    
+example.test4:
+  path: '/example4'
+  defaults:
+    _form: '\Drupal\user\Form\UserPasswordForm'
+    _title: 'Reset your password'
+  requirements:
+    _user_is_logged_in: 'FALSE'
+  options:
+    _admin_route: TRUE
 
 admin_audit_trail.report_form:
   path: "/admin/reports/audit-trail"

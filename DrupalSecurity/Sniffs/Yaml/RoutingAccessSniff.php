@@ -72,9 +72,9 @@ class RoutingAccessSniff implements Sniff {
       if ($rout = $info[$rout_key] ?? false) {
         // Audit requirements.
         if ($requirements = $rout['requirements'] ?? false) {
-          if ($accesss = $requirements['_access'] ?? false) {
+          if ($access = $requirements['_access'] ?? false) {
             // Search for _access: 'TRUE'
-            if (is_string($accesss) && strtolower($accesss) === 'true') {
+            if (is_string($access) && strtolower($access) === 'true') {
               $warning = "Open access to $rout_key found";
               $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
             }
@@ -100,6 +100,22 @@ class RoutingAccessSniff implements Sniff {
               $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
             }
           }
+          elseif ($role = $requirements['_role'] ?? false) {
+            // Search for _role: 'anonymous'
+            if (is_string($role) && strtolower($role) === 'anonymous') {
+              $warning = "Open access to $rout_key found";
+              $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
+            }
+          }
+          elseif ($login = $requirements['_user_is_logged_in'] ?? false) {
+            // Search for _user_is_logged_in: 'FALSE'
+            if (is_string($login) && strtolower($login) === 'false') {
+              $warning = "Open access to $rout_key found";
+              $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
+            }
+          }
+
+          // CSRF token test.
           if (!isset($rout['defaults']['_form'])) {
             // Search for _csrf_token.
             if ($csrf_token = $requirements['_csrf_token'] ?? false) {
