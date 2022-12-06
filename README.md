@@ -18,8 +18,9 @@ bin path to your `$PATH` variable in `~/.profile`, `~/.bashrc` or `~/.zshrc`:
 
     export PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
-Second, install Drupal coder:
+Second, install PHPCS plugins:
 [Drupal coder](https://github.com/drupalprojects/coder#installation)
+[PHPCSUtils](https://github.com/PHPCSStandards/PHPCSUtils)
 
 Last, download the DrupalSecurity folder to your local
 
