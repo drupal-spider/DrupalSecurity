@@ -83,7 +83,7 @@ class SqlSniff implements Sniff {
           if (\strtolower($parameters[3]['clean']) === "'like'") {
             if (\strpos($parameters[2]['clean'], '$') !== false) {
               $warning = 'A LIKE query contains dynamic variable. @see https://www.drupal.org/docs/security-in-drupal/writing-secure-code-for-drupal#s-use-the-database-abstraction-layer-to-avoid-sql-injection-attacks';
-              $phpcsFile->addError($warning, $stackPtr, 'SQL');
+              $phpcsFile->addWarning($warning, $stackPtr, 'SQL');
             }
           }
           elseif (\strpos($parameters[3]['clean'], '$') !== false) {
