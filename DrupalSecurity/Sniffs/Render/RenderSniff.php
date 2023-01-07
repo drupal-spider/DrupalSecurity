@@ -56,10 +56,10 @@ class RenderSniff implements Sniff {
     // There is a possibility of SSTI (Server Side Template Injection)
     // with inline template for a render array.
     // For example https://www.drupal.org/project/drupal/issues/3331205
-    if ($key === "'#type'") {
+    if ($key === "'#type'" || $key === '"#type"') {
       $value_position = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, $key_position + 1);
       $value = \strtolower($tokens[$value_position]['content']);
-      if ($value === "'inline_template'") {
+      if ($value === "'inline_template'" || $value === '"inline_template"') {
         $message = 'Inline template found. Check for SSTI. For example https://www.drupal.org/project/drupal/issues/3331205';
         $phpcsFile->addWarning($message, $stackPtr, 'Render');
       }
