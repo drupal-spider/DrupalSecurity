@@ -52,17 +52,29 @@ class RenderSniff implements Sniff {
     $key_position = $phpcsFile->findPrevious(T_CONSTANT_ENCAPSED_STRING, $stackPtr - 1);
     // The key of a render array item.
     $key = \strtolower($tokens[$key_position]['content']);
-    // Check if there is any inline template used.
-    // There is a possibility of SSTI (Server Side Template Injection)
-    // with inline template for a render array.
-    // For example https://www.drupal.org/project/drupal/issues/3331205
-    if ($key === "'#type'" || $key === '"#type"') {
-      $value_position = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, $key_position + 1);
-      $value = \strtolower($tokens[$value_position]['content']);
-      if ($value === "'inline_template'" || $value === '"inline_template"') {
-        $message = 'Inline template found. Check for SSTI. For example https://www.drupal.org/project/drupal/issues/3331205';
+    $key = str_replace(["'", '"'], '', $key);
+    switch ($key) {
+      // Check if there is any inline template used.
+      // There is a possibility of SSTI (Server Side Template Injection)
+      // with inline template for a render array.
+      // For example https://www.drupal.org/project/drupal/issues/3331205
+      case '#type':
+        $value_position = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, $key_position + 1);
+        $value = \strtolower($tokens[$value_position]['content']);
+        if ($value === "'inline_template'" || $value === '"inline_template"') {
+          $message = 'Inline template found. Check for SSTI. For example https://www.drupal.org/project/drupal/issues/3331205';
+          $phpcsFile->addWarning($message, $stackPtr, 'Render');
+        }
+        break;
+      // Check if there is a render callback function.
+      // @See https://unit42.paloaltonetworks.com/unit42-exploit-wild-drupalgeddon2-analysis-cve-2018-7600/
+      case '#post_render':
+      case '#pre_render':
+      case '#access_callback':
+      case '#lazy_builder':
+        $message = 'Render callback function found.';
         $phpcsFile->addWarning($message, $stackPtr, 'Render');
-      }
+        break;
     }
   }
 
