@@ -63,6 +63,13 @@ class TwigTemplateSniff implements Sniff {
       $error = 'The raw filter should be avoided whenever possible.';
       $phpcsFile->addError($error, $stackPtr, 'UnsafeFilterFound');
     }
+
+    // Search for unsafe attributes in a Twig template file.
+    // @see https://www.drupal.org/docs/security-in-drupal/writing-secure-code-for-drupal#s-use-twig-templates
+    if (strpos(str_replace(' ', '', $content), '={{') !== false) {
+      $error = 'rendering attributes in Twig should be wrapped with double or single quotes. @see https://www.drupal.org/docs/security-in-drupal/writing-secure-code-for-drupal#s-use-twig-templates';
+      $phpcsFile->addError($error, $stackPtr, 'UnsafeTwigTemplate');
+    }
   }
 
   // end process()
