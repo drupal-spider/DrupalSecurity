@@ -19,6 +19,11 @@ db_select('table', 't')
 ->condition('t.field', $user, $user_input)
 ->execute();
 
+// Unsafe, this gets all articles that exist regardless of access.
+$ids = \Drupal::entityQuery('node')
+->accessCheck(FALSE)
+->condition('type', 'article')
+->execute();
 
 // Safe
 \Database::getConnection()->query('SELECT foo FROM {table} t WHERE t.name = :name', [':name' => $_GET['user']]);
@@ -30,4 +35,10 @@ $users = ['joe', 'poe', $_GET['user']];
 $result = \Database::getConnection()->select('foo', 'f')
 ->fields('f', ['bar'])
 ->condition('f.bar', $users)
+->execute();
+
+// This gets all articles the current user can view.
+$ids = \Drupal::entityQuery('node')
+->accessCheck(TRUE)
+->condition('type', 'article')
 ->execute();

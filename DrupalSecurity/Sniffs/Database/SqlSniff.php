@@ -32,6 +32,7 @@ class SqlSniff implements Sniff {
   protected $targetFunctions = [
     'query' => true,
     'condition' => true,
+    'accesscheck' => true,
   ];
 
   /**
@@ -92,6 +93,12 @@ class SqlSniff implements Sniff {
             $warning = "Dynamic variable as a operator to a query's condition. @see https://www.drupal.org/docs/security-in-drupal/writing-secure-code-for-drupal#s-use-the-database-abstraction-layer-to-avoid-sql-injection-attacks";
             $phpcsFile->addError($warning, $stackPtr, 'SQL');
           }
+        }
+        break;
+      case 'accesscheck':
+        if (isset($parameters[1]) && \strtolower($parameters[1]['clean']) == 'false') {
+          $warning = "Query without having access check. @see https://www.drupal.org/node/3201242";
+          $phpcsFile->addWarning($warning, $stackPtr, 'Access check');
         }
         break;
     }
