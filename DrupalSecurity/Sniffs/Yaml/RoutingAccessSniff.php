@@ -72,11 +72,13 @@ class RoutingAccessSniff implements Sniff {
       if ($rout = $info[$rout_key] ?? false) {
         // Audit requirements.
         if ($requirements = $rout['requirements'] ?? false) {
+          $open_access = false;
           if ($access = $requirements['_access'] ?? false) {
             // Search for _access: 'TRUE'
             if (is_string($access) && strtolower($access) === 'true') {
               $warning = "Open access to $rout_key found";
               $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
+              $open_access = true;
             }
           }
           elseif ($permission = $requirements['_permission'] ?? false) {
@@ -98,6 +100,7 @@ class RoutingAccessSniff implements Sniff {
             if (strtolower($permission) === 'access conten') {
               $warning = "Open access to $rout_key found";
               $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
+              $open_access = true;
             }
           }
           elseif ($role = $requirements['_role'] ?? false) {
@@ -105,6 +108,7 @@ class RoutingAccessSniff implements Sniff {
             if (is_string($role) && strtolower($role) === 'anonymous') {
               $warning = "Open access to $rout_key found";
               $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
+              $open_access = true;
             }
           }
           elseif ($login = $requirements['_user_is_logged_in'] ?? false) {
@@ -112,11 +116,12 @@ class RoutingAccessSniff implements Sniff {
             if (is_string($login) && strtolower($login) === 'false') {
               $warning = "Open access to $rout_key found";
               $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
+              $open_access = true;
             }
           }
 
-          // CSRF token test.
-          if (!isset($rout['defaults']['_form'])) {
+          // CSRF token test for non-open access route.
+          if (!isset($rout['defaults']['_form']) && !$open_access) {
             // Search for _csrf_token.
             if ($csrf_token = $requirements['_csrf_token'] ?? false) {
               if (!$csrf_token) {

@@ -45,3 +45,16 @@ admin_audit_trail.report_form:
     _title: "Admin audit trails"
   requirements:
     _permission: "access admin audit trail"
+
+samlauth.saml_controller_login:
+  path: '/saml/login'
+  defaults:
+    _controller: '\Drupal\samlauth\Controller\SamlController::login'
+    _title: 'SAML login'
+  requirements:
+    _user_is_logged_in: 'FALSE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+    default_url_options:
+      path_processing: FALSE
