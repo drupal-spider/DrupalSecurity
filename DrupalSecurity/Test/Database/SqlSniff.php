@@ -25,6 +25,22 @@ $ids = \Drupal::entityQuery('node')
 ->condition('type', 'article')
 ->execute();
 
+// Mutiple entities loading won't check the access. You have to check the access for those entities after loading.
+$entities = \Drupal::entityTypeManager()->getStorage($entityType)->loadMultiple();
+
+
+$properties = [
+  $entityStorage->getEntityType()->getKey('bundle') => $bundleID,
+];
+// Load entities by their property values without any access checks. @see https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21EntityStorageBase.php/function/EntityStorageBase%3A%3AloadByProperties/10
+$entities = $entityStorage->loadByProperties($properties);
+
+// Use the access() function to check the access for each entity.
+foreach ($entities as $entity) {
+  if ($entity->access('view')) {
+  }
+}
+
 // Safe
 \Database::getConnection()->query('SELECT foo FROM {table} t WHERE t.name = :name', [':name' => $_GET['user']]);
 

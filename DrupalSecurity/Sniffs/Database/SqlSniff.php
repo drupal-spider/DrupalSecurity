@@ -32,7 +32,9 @@ class SqlSniff implements Sniff {
   protected $targetFunctions = [
     'query' => true,
     'condition' => true,
-    'accesscheck' => true,
+    'accessCheck' => true,
+    'loadMultiple' => true,
+    'loadByProperties' => true,
   ];
 
   /**
@@ -59,7 +61,7 @@ class SqlSniff implements Sniff {
    */
   public function process(File $phpcsFile, $stackPtr) {
     $tokens     = $phpcsFile->getTokens();
-    $functionLc = \strtolower($tokens[$stackPtr]['content']);
+    $functionLc = $tokens[$stackPtr]['content'];
     if (isset($this->targetFunctions[$functionLc]) === false) {
       return;
     }
@@ -95,11 +97,19 @@ class SqlSniff implements Sniff {
           }
         }
         break;
-      case 'accesscheck':
+      case 'accessCheck':
         if (isset($parameters[1]) && \strtolower($parameters[1]['clean']) == 'false') {
           $warning = "Query without having access check. @see https://www.drupal.org/node/3201242";
           $phpcsFile->addWarning($warning, $stackPtr, 'Access check');
         }
+        break;
+      case 'loadMultiple':
+        $warning = "loadMultiple() function detected. This function won't check access during loading. @see https://www.drupal.org/docs/drupal-apis/entity-api/working-with-the-entity-api#s-checking-if-a-user-account-has-access-to-an-entity-object";
+        $phpcsFile->addWarning($warning, $stackPtr, 'Access check');
+        break;
+      case 'loadByProperties':
+        $warning = "loadByProperties() function detected. This function won't check access during loading. @see https://www.drupal.org/docs/drupal-apis/entity-api/working-with-the-entity-api#s-checking-if-a-user-account-has-access-to-an-entity-object";
+        $phpcsFile->addWarning($warning, $stackPtr, 'Access check');
         break;
     }
   }// end process()
