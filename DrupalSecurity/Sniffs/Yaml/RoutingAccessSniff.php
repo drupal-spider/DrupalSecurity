@@ -93,11 +93,11 @@ class RoutingAccessSniff implements Sniff {
               $phpcsFile->addWarning($warning, $line_num, 'WidePermissionFound');
             }
 
-            // Search for 'access conten' permission.
+            // Search for 'access content' permission.
             // 'access conten' is nomrally granted to anonymouse user.
             // This permission should not be used for a route
             // that performs actions or operations
-            if (strtolower($permission) === 'access conten') {
+            if (strtolower($permission) === 'access content') {
               $warning = "Open access to $rout_key found";
               $phpcsFile->addWarning($warning, $line_num, 'OpenAccess');
               $open_access = true;
