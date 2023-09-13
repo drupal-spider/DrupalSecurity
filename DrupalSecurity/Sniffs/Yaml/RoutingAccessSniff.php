@@ -121,7 +121,9 @@ class RoutingAccessSniff implements Sniff {
           }
 
           // CSRF token test for non-open access route.
-          if (!isset($rout['defaults']['_form']) && !$open_access) {
+          if (!isset($rout['defaults']['_form']) &&
+              !isset($rout['defaults']['_entity_form']) &&
+              !$open_access) {
             // Search for _csrf_token.
             if ($csrf_token = $requirements['_csrf_token'] ?? false) {
               if (!$csrf_token) {
