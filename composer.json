@@ -1,0 +1,23 @@
+{
+    "name": "drupal-spider/drupalsecurity",
+    "type": "phpcodesniffer-standard",
+    "description": "Drupal Security is a library to review security issue of Drupal code.",
+    "homepage": "https://github.com/drupal-spider/DrupalSecurity",
+    "support": {
+        "issues": "https://github.com/drupal-spider/DrupalSecurity/issues",
+        "source": "https://github.com/drupal-spider/DrupalSecurity"
+    },
+    "keywords": ["phpcs", "standards", "code review", "Drupal", "security"],
+    "license": "GPL-2.0+",
+    "require": {
+        "drupalprojects/coder": ">=8.2.0",
+        "ext-mbstring": "*",
+        "php": ">=5.4.0",
+        "PHPCSStandards/PHPCSUtils": ">=1.0.0",
+        "PHPCSStandards/PHP_CodeSniffe": ">=3.0.0",
+        "symfony/yaml": ">=2.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=3.7 <6"
+    }
+}
