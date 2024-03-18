@@ -11,7 +11,7 @@ please use [ESLint](http://eslint.org/) and see the
 
 First, install phpcs:
 
-[PHP_CodeSniffe install](https://github.com/squizlabs/PHP_CodeSniffer#installation)
+[PHP_CodeSniffe install](https://github.com/PHPCSStandards/PHP_CodeSniffer/?tab=readme-ov-file#installation)
 
 To make the `phpcs` command available globally, add the Composer
 bin path to your `$PATH` variable in `~/.profile`, `~/.bashrc` or `~/.zshrc`:
