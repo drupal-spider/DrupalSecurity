@@ -16,7 +16,7 @@ First, install phpcs:
 To make the `phpcs` command available globally, add the Composer
 bin path to your `$PATH` variable in `~/.profile`, `~/.bashrc` or `~/.zshrc`:
 
-    export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+    export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 Second, install PHPCS plugins:
 [Drupal coder](https://github.com/drupalprojects/coder#installation)
