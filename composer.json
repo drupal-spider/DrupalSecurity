@@ -10,7 +10,7 @@
     "keywords": ["phpcs", "standards", "code review", "Drupal", "security"],
     "license": "GPL-2.0+",
     "require": {
-        "drupalprojects/coder": ">=8.2.0",
+        "drupal/coder": ">=8.2.0",
         "ext-mbstring": "*",
         "php": ">=5.4.0",
         "phpcsstandards/phpcsutils": ">=1.0.0",
