@@ -15,7 +15,7 @@ please use [ESLint](http://eslint.org/) and see the
 
 Check Drupal Security standards
 
-    phpcs --standard=DrupalSecurity --extensions=php,module,inc,install,theme,yml,twig [/file/to/drupal/module]
+    phpcs --standard=DrupalSecurity  --ignore='*/tests/*' --extensions=php,module,inc,install,theme,yml,twig [/file/to/drupal/module]
 
 List all sniffers
 
