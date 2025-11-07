@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This projects adheres to [Keep a CHANGELOG](https://keepachangelog.com/) and uses [Semantic Versioning](https://semver.org/).
 
+## [1.2.3]
+
+### Add
+
+- #### Added `ZipExtractSniff` to warn about risky uses of `ZipArchive::extractTo()`, `ZipArchive::open()`, and `Drupal\\Core\\Archiver\\Zip::extract()`.
+
 ## [1.2.2]
 
 ### Add
