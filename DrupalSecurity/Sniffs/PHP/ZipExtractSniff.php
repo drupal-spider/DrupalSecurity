@@ -85,6 +85,9 @@ class ZipExtractSniff implements Sniff
         $this->processObjectCall($phpcsFile, $stackPtr);
     }
 
+    /**
+     * Handle static calls such as ZipArchive::extractTo().
+     */
     private function processStaticCall(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
@@ -112,6 +115,9 @@ class ZipExtractSniff implements Sniff
         $this->addExtractWarning($phpcsFile, $methodPtr, $methodConfig);
     }
 
+    /**
+     * Handle chained/object calls such as $zip->extractTo().
+     */
     private function processObjectCall(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
@@ -134,11 +140,17 @@ class ZipExtractSniff implements Sniff
         }
     }
 
+    /**
+     * Emit the configured warning for a matched method.
+     */
     private function addExtractWarning(File $phpcsFile, int $methodPtr, array $methodConfig): void
     {
         $phpcsFile->addWarning($methodConfig['message'], $methodPtr, $methodConfig['code']);
     }
 
+    /**
+     * Resolve the fully qualified class name used in a static call.
+     */
     private function getClassName(File $phpcsFile, int $stackPtr): string
     {
         $tokens = $phpcsFile->getTokens();
@@ -152,6 +164,9 @@ class ZipExtractSniff implements Sniff
         return implode('', $parts);
     }
 
+    /**
+     * Map a class (direct or alias) to one of the sniff targets.
+     */
     private function identifyTarget(File $phpcsFile, string $className): ?string
     {
         $normalized = ltrim(strtolower($className), '\\');
@@ -175,6 +190,9 @@ class ZipExtractSniff implements Sniff
         return null;
     }
 
+    /**
+     * Fetch method metadata for the requested target method.
+     */
     private function getMethodConfig(array $targetConfig, string $methodName): ?array
     {
         $methodName = strtolower($methodName);
@@ -186,6 +204,8 @@ class ZipExtractSniff implements Sniff
     }
 
     /**
+     * Return all aliases referencing the given target within the file.
+     *
      * @return array<int, string>
      */
     private function getTargetAliases(File $phpcsFile, string $targetKey): array
@@ -211,6 +231,8 @@ class ZipExtractSniff implements Sniff
     }
 
     /**
+     * Discover variables/properties instantiated from the target class.
+     *
      * @return array{variables: string[], properties: string[]}
      */
     private function getTargetVariables(File $phpcsFile, string $targetKey): array
@@ -261,6 +283,8 @@ class ZipExtractSniff implements Sniff
     }
 
     /**
+     * Build a deduplicated list of class names (FQCN + aliases) for a target.
+     *
      * @return array<int, string>
      */
     private function buildClassNameAlternatives(File $phpcsFile, string $targetKey, string $fqn): array
@@ -273,6 +297,9 @@ class ZipExtractSniff implements Sniff
         return array_values(array_unique($names, SORT_STRING));
     }
 
+    /**
+     * Collect import use statements for the current file.
+     */
     private function getImportUseStatements(File $phpcsFile): array
     {
         $filename = $phpcsFile->getFilename();
@@ -310,6 +337,9 @@ class ZipExtractSniff implements Sniff
         return $this->importsCache[$filename] = $useStatements;
     }
 
+    /**
+     * Determine if the variable/property before the operator is a tracked Zip instance.
+     */
     private function isTargetVariable(File $phpcsFile, int $stackPtr, string $targetKey): bool
     {
         $tokens = $phpcsFile->getTokens();
