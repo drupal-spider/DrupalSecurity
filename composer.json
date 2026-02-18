@@ -1,11 +1,11 @@
 {
-    "name": "drupal-spider/drupalsecurity",
+    "name": "mingsong-hu/drupalsecurity",
     "type": "phpcodesniffer-standard",
     "description": "Drupal Security is a library to review security issue of Drupal code.",
-    "homepage": "https://github.com/drupal-spider/DrupalSecurity",
+    "homepage": "https://github.com/mingsong-hu/DrupalSecurity",
     "support": {
-        "issues": "https://github.com/drupal-spider/DrupalSecurity/issues",
-        "source": "https://github.com/drupal-spider/DrupalSecurity"
+        "issues": "https://github.com/mingsong-hu/DrupalSecurity/issues",
+        "source": "https://github.com/mingsong-hu/DrupalSecurity"
     },
     "keywords": ["phpcs", "standards", "code review", "Drupal", "security"],
     "license": "GPL-2.0+",
