@@ -9,7 +9,7 @@ please use [ESLint](http://eslint.org/) and see the
 
 ## Global installation
     composer global require "squizlabs/php_codesniffer=*"
-    composer global require drupal-spider/drupalsecurity
+    composer global require mingsong-hu/drupalsecurity
 
   Make sure you have the composer bin dir in your PATH. The default value is ~/.composer/vendor/bin/, but you can check the value that you need to use by running 
 
