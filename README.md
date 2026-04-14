@@ -1,7 +1,7 @@
 # DrupalSecurity
 
 DrupalSecurity is a library for automated Drupal code security reviews. It
-defines rules for [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+defines rules for [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer)
 
 Note that Javascript has not been supported yet. To check and fix Javascript files
 please use [ESLint](http://eslint.org/) and see the
